@@ -3,6 +3,7 @@ package com.zensar.olxapplication.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,73 +18,42 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zensar.olxapplication.entity.Olx;
-
+import com.zensar.olxapplication.service.OlxService;
 
 @RestController
 public class OlxController {
-
-	List<Olx> userDetails = new ArrayList<Olx>();
-
-	public OlxController() {
-		userDetails.add(new Olx(1, "Ankita", "Ghodake", "ankitag", "ankita@97", "ankita25897@gmail.com", 9985278789L));
-
-	}
+	@Autowired
+	private OlxService olxService;
 
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
 	public ResponseEntity<Olx> createOlxUser(@RequestBody Olx olx, @RequestHeader("auth-token") String token) {
-		if (token.contentEquals("ag66543")) {
-			userDetails.add(olx);
-
-		} else {
+		Olx olxResult = olxService.createOlxUser(olx, token);
+		if (olxResult == null) {
 			return new ResponseEntity<Olx>(HttpStatus.BAD_REQUEST);
+		} else {
+			return new ResponseEntity<Olx>(olx, HttpStatus.CREATED);
 		}
-		return new ResponseEntity<Olx>(olx, HttpStatus.CREATED);
 	}
 
 	@GetMapping("/user")
-	
+
 	public List<Olx> getAllUser() {
 
-		return userDetails;
+		return olxService.getAllUser();
 
 	}
 
-	
-	
-	
 	// @PostMapping
-	@RequestMapping(value ="/user/authenticate", method = RequestMethod.POST)
-	public String signInDetails(@RequestBody(required=false) String userName, @RequestBody(required=false) String password ,@RequestHeader("auth-token") String token) {
-		
-		Olx olx=new Olx();
-		olx.setUserName("ankitag");
-		olx.setPassword("ankita123");
-		
-		if(token.equals("ag66543")) {
-			if(olx.getUserName().equals("ankitag") && olx.getPassword().equals("ankita123"));
-			return "Sign in Successfull!!!";
-		}
-		return "Sign in Failed";
-		
+	@RequestMapping(value = "/user/authenticate", method = RequestMethod.POST)
+	public String signInDetails(@RequestBody(required = false) String userName,
+			@RequestBody(required = false) String password, @RequestHeader("auth-token") String token) {
+		return olxService.signInDetails(userName, password, token);
+
 	}
-	
-	
-	
-	
-	
-	
+
 	@DeleteMapping("/user/logout/{userId}")
 	public String deleteUser(@PathVariable int userId) {
-		for (Olx olx: userDetails) {
-			if (olx.getUserId() == userId) {
-				userDetails.remove(olx);
-				return "user deleted Successfully" + userId;
-			}
-		}
-		return "Sorry user is not available";
-		
-	}
-	
-	
+		return olxService.deleteUser(userId);
 
+	}
 }
