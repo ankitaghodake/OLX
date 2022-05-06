@@ -14,41 +14,45 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zensar.olxadvertiseapp.advertiseService.AdvertiseService;
 import com.zensar.olxadvertiseapp.entity.OlxAdverties;
+import com.zensar.olxadvertiseapp.entity.OlxRequest;
+import com.zensar.olxadvertiseapp.entity.OlxResponse;
 
 @RestController
 public class OlxAdvertiesController {
-//@Autowired
+@Autowired
 	private AdvertiseService advertiseService;
 
 	@RequestMapping(value = "/advertise", method = RequestMethod.POST)
-	public ResponseEntity<OlxAdverties> createOlxUser(@RequestBody OlxAdverties olx,
+	public ResponseEntity<OlxAdverties> createOlxUser(@RequestBody OlxRequest olx,
 			@RequestHeader("auth-token") String token) {
-		OlxAdverties olxAdd = advertiseService.createOlxUser(olx, token);
+		OlxResponse olxAdd = advertiseService.createOlxUser(olx, token);
 		if (olxAdd == null) {
 			return new ResponseEntity<OlxAdverties>(HttpStatus.BAD_REQUEST);
 		} else {
-			return new ResponseEntity<OlxAdverties>(olx, HttpStatus.CREATED);
+			return new ResponseEntity<OlxAdverties>(HttpStatus.CREATED);
 		}
 	}
 
 	@GetMapping(value = "/user/advertise")
-	public List<OlxAdverties> getAll() {
+	public List<OlxResponse> getAll(@RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
+			@RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize) {
 
-		return advertiseService.getAll();
+		return advertiseService.getAll(pageNumber, pageSize);
 	}
 
 	@RequestMapping(value = "user/advertise/{id}", method = RequestMethod.GET)
-	public OlxAdverties getSpecificAdd(@PathVariable("id") int id) {
+	public OlxResponse getSpecificAdd(@PathVariable("id") int id) {
 		return advertiseService.getSpecificAdd(id);
 
 	}
 
 	@PutMapping("/advertise/{id}")
-	public OlxAdverties updateStock(@PathVariable("id") int id, @RequestBody OlxAdverties olxAdverties) {
+	public OlxResponse updateStock(@PathVariable("id") int id, @RequestBody OlxRequest olxAdverties) {
 		return advertiseService.updateStock(id, olxAdverties);
 	}
 

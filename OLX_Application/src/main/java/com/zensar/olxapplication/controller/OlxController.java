@@ -1,45 +1,48 @@
 package com.zensar.olxapplication.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zensar.olxapplication.entity.Olx;
+import com.zensar.olxapplication.entity.OlxRequest;
+import com.zensar.olxapplication.entity.OlxResponse;
 import com.zensar.olxapplication.service.OlxService;
 
-@RestController
+@Controller
+
 public class OlxController {
 	@Autowired
 	private OlxService olxService;
+	
+	
 
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
-	public ResponseEntity<Olx> createOlxUser(@RequestBody Olx olx, @RequestHeader("auth-token") String token) {
-		Olx olxResult = olxService.createOlxUser(olx, token);
+	public ResponseEntity<Olx> createOlxUser(@RequestBody OlxRequest olx, @RequestHeader("auth-token") String token) {
+		OlxResponse olxResult = olxService.createOlxUser(olx, token);
 		if (olxResult == null) {
 			return new ResponseEntity<Olx>(HttpStatus.BAD_REQUEST);
 		} else {
-			return new ResponseEntity<Olx>(olx, HttpStatus.CREATED);
+			return new ResponseEntity<Olx>(HttpStatus.CREATED);
 		}
 	}
 
 	@GetMapping("/user")
+	public List<OlxResponse> getAllUser(@RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
+			@RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize) {
 
-	public List<Olx> getAllUser() {
-
-		return olxService.getAllUser();
+		return olxService.getAllUser(pageNumber, pageSize);
 
 	}
 

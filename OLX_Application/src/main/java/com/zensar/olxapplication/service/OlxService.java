@@ -6,13 +6,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.zensar.olxapplication.entity.Olx;
+import com.zensar.olxapplication.entity.OlxRequest;
+import com.zensar.olxapplication.entity.OlxResponse;
 
 public interface OlxService {
-	List<Olx> getAllUser();
+	List<OlxResponse> getAllUser(int pageNumber,int pageSize);
 
 	String signInDetails(String userName, String password, String token);
 
-	Olx createOlxUser(Olx olx, String token);
+	OlxResponse createOlxUser(OlxRequest olx, String token);
 
 	String deleteUser(int userId);
 
