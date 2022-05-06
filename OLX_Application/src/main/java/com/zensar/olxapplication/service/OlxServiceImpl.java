@@ -9,9 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.zensar.olxapplication.dto.OlxDto;
 import com.zensar.olxapplication.entity.Olx;
-import com.zensar.olxapplication.entity.OlxRequest;
-import com.zensar.olxapplication.entity.OlxResponse;
 import com.zensar.olxapplication.repository.OlxLoginRepository;
 
 
@@ -33,15 +32,15 @@ public class OlxServiceImpl implements OlxService {
 	
 
 	@Override
-	public List<OlxResponse> getAllUser(int pageNumber, int pageSize) {
+	public List<OlxDto> getAllUser(int pageNumber, int pageSize) {
 		Page<Olx> pageOlx = olxRepository.findAll(PageRequest.of(pageNumber, pageSize));
 		List<Olx> page = pageOlx.getContent();
 
-		List<OlxResponse> olxResponses = new ArrayList<>();
+		List<OlxDto> olxResponses = new ArrayList<>();
 
 		for (Olx olx : page) {
 			//OlxResponse mapToResponse = mapToResponse(olx);
-			OlxResponse response=modelMapper.map(pageOlx, OlxResponse.class);
+			OlxDto response=modelMapper.map(pageOlx, OlxDto.class);
 			olxResponses.add(response);
 		}
 		return olxResponses;
@@ -65,14 +64,14 @@ public class OlxServiceImpl implements OlxService {
 	}
 
 	@Override
-	public OlxResponse createOlxUser(OlxRequest olxRequest, String token) {
+	public OlxDto createOlxUser(OlxDto olxRequest, String token) {
 		
       Olx newOlx= modelMapper.map(olxRequest, Olx.class);
 		
 
 		if (token.equals("ag66543")) {
 			 Olx olx1 = olxRepository.save(newOlx);
-			return modelMapper.map(olx1, OlxResponse.class);
+			return modelMapper.map(olx1, OlxDto.class);
 
 		} else {
 			return null;
@@ -123,9 +122,9 @@ public class OlxServiceImpl implements OlxService {
 	 * }
 	 */
 
-	private OlxResponse mapToResponse(Olx olx) {
+	private OlxDto mapToResponse(Olx olx) {
 
-		OlxResponse olxResponse = new OlxResponse();
+		OlxDto olxResponse = new OlxDto();
 
 		olxResponse.setUserId(olx.getUserId());
 

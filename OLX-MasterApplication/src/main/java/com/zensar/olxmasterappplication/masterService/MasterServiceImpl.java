@@ -5,14 +5,10 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-
+import com.zensar.olxmasterappplication.dto.OlxMasterDto;
 import com.zensar.olxmasterappplication.entity.OlxCategories;
-import com.zensar.olxmasterappplication.entity.OlxRequest;
-import com.zensar.olxmasterappplication.entity.OlxResponse;
 import com.zensar.olxmasterappplication.entity.OlxStatusList;
 import com.zensar.olxmasterappplication.repository.MasterCategories;
 import com.zensar.olxmasterappplication.repository.MasterStatus;
@@ -46,64 +42,63 @@ public class MasterServiceImpl implements MasterService {
 	}
 
 	@Override
-	public List<OlxResponse> getAllAdd(int pageNumber, int pageSize) {
-		Page<OlxCategories> pageOlx = masterCategories.findAll(PageRequest.of(pageNumber, pageSize));
-		List<OlxCategories> page = pageOlx.getContent();
+	public List<OlxMasterDto> getAllAdd() {
+		List<OlxCategories> statusOlx = masterCategories.findAll();
+		
+		List<OlxMasterDto> olxResponses = new ArrayList<>();
 
-		List<OlxResponse> olxResponses = new ArrayList<>();
-
-		for (OlxCategories olx : page) {
+		for (OlxCategories olx : userDetails) {
 			//OlxResponse mapToResponse = mapToResponse(olx);
-			OlxResponse response=modelMapper.map(pageOlx, OlxResponse.class);
+			OlxMasterDto response=modelMapper.map(olx, OlxMasterDto.class);
 			olxResponses.add(response);
 		}
 		return olxResponses;
 	}
 
 	@Override
-	public List<OlxResponse> getStatusList(int pageNumber, int pageSize) {
+	public List<OlxMasterDto> getStatusList() {
 		
-		Page<OlxCategories> pageOlx = masterCategories.findAll(PageRequest.of(pageNumber, pageSize));
-		List<OlxCategories> page = pageOlx.getContent();
+		List<OlxStatusList> ListOlx = masterStatus.findAll();
+	
 
-		List<OlxResponse> olxResponses = new ArrayList<>();
+		List<OlxMasterDto> olxResponses = new ArrayList<>();
 
-		for (OlxCategories olx : page) {
+		for (OlxStatusList olx : userStatus) {
 			//OlxResponse mapToResponse = mapToResponse(olx);
-			OlxResponse response=modelMapper.map(pageOlx, OlxResponse.class);
+			OlxMasterDto response=modelMapper.map(olx, OlxMasterDto.class);
 			olxResponses.add(response);
 		}
 		return olxResponses;
 	}
 
 	
-	private OlxCategories mapToOlxCategories(OlxRequest olxRequest) {
+	/*
+	 * private OlxCategories mapToOlxCategories(OlxMasterDto olxRequest) {
+	 * 
+	 * OlxCategories newOlx = new OlxCategories(); newOlx.setId(olxRequest.getId());
+	 * 
+	 * newOlx.setCategory(olxRequest.getCategory());
+	 * 
+	 * return newOlx; }
+	 * 
+	 * private OlxCategories mapToOlxCategories1(OlxMasterDto olx) {
+	 * 
+	 * OlxCategories newOlx = new OlxCategories();
+	 * 
+	 * newOlx.setId(olx.getId());
+	 * 
+	 * newOlx.setCategory(olx.getCategory());
+	 * 
+	 * 
+	 * 
+	 * return newOlx;
+	 * 
+	 * }
+	 */
 
-		OlxCategories newOlx = new OlxCategories();
-		newOlx.setId(olxRequest.getId());
+	private OlxMasterDto mapToResponse(OlxCategories olx) {
 
-		newOlx.setCategory(olxRequest.getCategory());
-
-		return newOlx;
-	}
-
-	private OlxCategories mapToOlxCategories(OlxResponse olx) {
-
-		OlxCategories newOlx = new OlxCategories();
-
-		newOlx.setId(olx.getId());
-
-		newOlx.setCategory(olx.getCategory());
-
-		
-
-		return newOlx;
-
-	}
-
-	private OlxResponse mapToResponse(OlxCategories olx) {
-
-		OlxResponse olxResponse = new OlxResponse();
+		OlxMasterDto olxResponse = new OlxMasterDto();
 
 		olxResponse.setId(olx.getId());
 
@@ -116,34 +111,35 @@ public class MasterServiceImpl implements MasterService {
 
 	
 
-	private OlxStatusList mapToOlxStatus(OlxRequest olxRequest) {
+	/*
+	 * private OlxStatusList mapToOlxStatus(OlxMasterDto olxRequest) {
+	 * 
+	 * OlxStatusList newOlx = new OlxStatusList();
+	 * newOlx.setStatusId(olxRequest.getStatusId());
+	 * 
+	 * newOlx.setStatus(olxRequest.getStatus());
+	 * 
+	 * return newOlx; }
+	 * 
+	 * private OlxStatusList mapToOlxStatus(OlxMasterDto olx) {
+	 * 
+	 * OlxStatusList newOlx = new OlxStatusList();
+	 * 
+	 * newOlx.setStatusId(olx.getStatusId());
+	 * 
+	 * newOlx.setStatus(olx.getStatus());
+	 * 
+	 * 
+	 * 
+	 * 
+	 * return newOlx;
+	 * 
+	 * }
+	 */
 
-		OlxStatusList newOlx = new OlxStatusList();
-		newOlx.setStatusId(olxRequest.getStatusId());
+	private OlxMasterDto mapToResponse(OlxStatusList olx) {
 
-		newOlx.setStatus(olxRequest.getStatus());
-
-		return newOlx;
-	}
-
-	private OlxStatusList mapToOlxStatus(OlxResponse olx) {
-
-		OlxStatusList newOlx = new OlxStatusList();
-
-		newOlx.setStatusId(olx.getStatusId());
-
-		newOlx.setStatus(olx.getStatus());
-
-
-		
-
-		return newOlx;
-
-	}
-
-	private OlxResponse mapToResponse(OlxStatusList olx) {
-
-		OlxResponse olxResponse = new OlxResponse();
+		OlxMasterDto olxResponse = new OlxMasterDto();
 
 		olxResponse.setStatusId(olx.getStatusId());
 

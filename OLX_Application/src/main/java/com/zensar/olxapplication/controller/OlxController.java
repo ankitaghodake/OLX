@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zensar.olxapplication.dto.OlxDto;
 import com.zensar.olxapplication.entity.Olx;
-import com.zensar.olxapplication.entity.OlxRequest;
-import com.zensar.olxapplication.entity.OlxResponse;
 import com.zensar.olxapplication.service.OlxService;
 
 @RestController
@@ -25,11 +24,11 @@ public class OlxController {
 	@Autowired
 	private OlxService olxService;
 	
-	
+
 
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
-	public ResponseEntity<Olx> createOlxUser(@RequestBody OlxRequest olx, @RequestHeader("auth-token") String token) {
-		OlxResponse olxResult = olxService.createOlxUser(olx, token);
+	public ResponseEntity<Olx> createOlxUser(@RequestBody OlxDto olx, @RequestHeader("auth-token") String token) {
+		OlxDto olxResult = olxService.createOlxUser(olx, token);
 		if (olxResult == null) {
 			return new ResponseEntity<Olx>(HttpStatus.BAD_REQUEST);
 		} else {
@@ -38,7 +37,7 @@ public class OlxController {
 	}
 
 	@GetMapping("/user")
-	public List<OlxResponse> getAllUser(@RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
+	public List<OlxDto> getAllUser(@RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
 			@RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize) {
 
 		return olxService.getAllUser(pageNumber, pageSize);

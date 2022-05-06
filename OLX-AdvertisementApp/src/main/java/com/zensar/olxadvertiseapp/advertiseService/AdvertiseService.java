@@ -2,17 +2,13 @@ package com.zensar.olxadvertiseapp.advertiseService;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.RequestHeader;
-
-import com.zensar.olxadvertiseapp.entity.OlxAdverties;
-import com.zensar.olxadvertiseapp.entity.OlxRequest;
-import com.zensar.olxadvertiseapp.entity.OlxResponse;
+import com.zensar.olxadvertiseapp.dto.OlxAddDto;
 
 public interface AdvertiseService {
-	OlxResponse createOlxUser(OlxRequest olx, String token);
-	List<OlxResponse> getAll(int pageNumber, int pageSize);
-	OlxResponse getSpecificAdd(int id);
-	OlxResponse updateStock(int id, OlxRequest olxrequest);
+	OlxAddDto createOlxUser(OlxAddDto olx, String token);
+	List<OlxAddDto> getAll();
+	OlxAddDto getSpecificAdd(int id);
+	OlxAddDto updateStock(int id, OlxAddDto olxrequest);
 	String deleteUser(int id);
 	
 	

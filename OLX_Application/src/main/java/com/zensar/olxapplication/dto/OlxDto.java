@@ -1,4 +1,4 @@
-package com.zensar.olxapplication.entity;
+package com.zensar.olxapplication.dto;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OlxRequest {
-	  @Id
-	  @GeneratedValue(strategy = GenerationType.AUTO)
-	 
+public class OlxDto {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userId;
 	private String firstName;
 	private String lastName;
