@@ -7,15 +7,15 @@ import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class OlxResponse {
-	/*
-	 * @Id
-	 * 
-	 * @GeneratedValue(strategy = GenerationType.AUTO)
-	 */
+	@Id
+
+	@GeneratedValue(strategy = GenerationType.AUTO)
+
 	private int userId;
 	private String firstName;
 	private String lastName;

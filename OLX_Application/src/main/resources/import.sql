@@ -1,2 +1,1 @@
-insert into Olx values(1,"Madhur","Jain","MadhurJain","Madhur@123","Madhur@Zensar.com",9046382945);
-insert into Olx values(2,"Ankita","Ghodake","AnkitaGhodake","Ankita@123","ankita@Zensar.com",7924561235);
+insert into Olx values(1,"Ankita","Ghodake","AnkitaGhodake",9046382944,"Ankita@Zensar.com","Ankita@123");

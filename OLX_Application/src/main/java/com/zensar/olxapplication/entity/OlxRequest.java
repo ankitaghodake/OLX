@@ -12,11 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OlxRequest {
-	/*
-	 * @Id
-	 * 
-	 * @GeneratedValue(strategy = GenerationType.AUTO)
-	 */
+	  @Id
+	  @GeneratedValue(strategy = GenerationType.AUTO)
+	 
 	private int userId;
 	private String firstName;
 	private String lastName;
