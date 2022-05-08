@@ -22,28 +22,26 @@ public class MasterServiceImpl implements MasterService {
 	
 	private ModelMapper modelMapper=new ModelMapper();
 	
-	static List<OlxCategories> userDetails = new ArrayList<OlxCategories>();
 
-	static {
-		userDetails.add(new OlxCategories(1, "Furniture"));
-		userDetails.add(new OlxCategories(2, "cars"));
-		userDetails.add(new OlxCategories(3, "mobiles"));
-		userDetails.add(new OlxCategories(4, "real estate"));
-		userDetails.add(new OlxCategories(5, "sports"));
-	}
-	
-	static List<OlxStatusList> userStatus = new ArrayList<OlxStatusList>();
-	
-	static {
-		userStatus.add(new OlxStatusList(1, "OPEN"));
-		userStatus.add(new OlxStatusList(2, "CLOSED"));
-		
-
-	}
+	  static List<OlxCategories> userDetails = new ArrayList<OlxCategories>();
+	  
+	  static { userDetails.add(new OlxCategories(1, "Furniture"));
+	  userDetails.add(new OlxCategories(2, "cars")); userDetails.add(new
+	  OlxCategories(3, "mobiles")); userDetails.add(new OlxCategories(4,
+	  "real estate")); userDetails.add(new OlxCategories(5, "sports")); }
+	  
+	  static List<OlxStatusList> userStatus = new ArrayList<OlxStatusList>();
+	  
+	  static { userStatus.add(new OlxStatusList(1, "OPEN")); userStatus.add(new
+	  OlxStatusList(2, "CLOSED"));
+	  
+	  
+	  }
+	 
 
 	@Override
-	public List<OlxMasterDto> getAllAdd() {
-		List<OlxCategories> statusOlx = masterCategories.findAll();
+	public List<OlxMasterDto> getAllAdd(int pageNumber,int pageSize) {
+		List<OlxCategories> ListOlx = masterCategories.findAll();
 		
 		List<OlxMasterDto> olxResponses = new ArrayList<>();
 
@@ -56,9 +54,9 @@ public class MasterServiceImpl implements MasterService {
 	}
 
 	@Override
-	public List<OlxMasterDto> getStatusList() {
+	public List<OlxMasterDto> getStatusList(int pageNumber,int pageSize) {
 		
-		List<OlxStatusList> ListOlx = masterStatus.findAll();
+		List<OlxStatusList> ListStatus = masterStatus.findAll();
 	
 
 		List<OlxMasterDto> olxResponses = new ArrayList<>();

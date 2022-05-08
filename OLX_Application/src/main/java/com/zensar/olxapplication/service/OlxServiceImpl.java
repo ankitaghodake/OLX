@@ -25,22 +25,22 @@ public class OlxServiceImpl implements OlxService {
 
 	Olx olx = new Olx();
 	
-	  static List<Olx> userDetails = new ArrayList<Olx>();
+	  //static List<Olx> userDetails = new ArrayList<Olx>();
 	  
-	  static { userDetails.add(new Olx(1, "Ankita", "Ghodake", "ankitag",
-	  "ankita@97", "ankita25897@gmail.com", 9985278789L)); }
+	 // static { userDetails.add(new Olx(1, "Ankita", "Ghodake", "ankitag",
+	 // "ankita@97", "ankita25897@gmail.com", 9985278789L)); }
 	
 
 	@Override
-	public List<OlxDto> getAllUser(int pageNumber, int pageSize) {
-		Page<Olx> pageOlx = olxRepository.findAll(PageRequest.of(pageNumber, pageSize));
-		List<Olx> page = pageOlx.getContent();
+	public List<OlxDto> getAllUser( int pageNumber, int pageSize ) {
+		Page<Olx> listOlx = olxRepository.findAll( PageRequest.of(pageNumber, pageSize) );
+		List<Olx> page = listOlx.getContent();
 
 		List<OlxDto> olxResponses = new ArrayList<>();
 
-		for (Olx olx : page) {
+		for (Olx olx :page ) {
 			//OlxResponse mapToResponse = mapToResponse(olx);
-			OlxDto response=modelMapper.map(pageOlx, OlxDto.class);
+			OlxDto response=modelMapper.map(olx, OlxDto.class);
 			olxResponses.add(response);
 		}
 		return olxResponses;
@@ -80,13 +80,14 @@ public class OlxServiceImpl implements OlxService {
 
 	@Override
 	public String deleteUser(int userId) {
-		for (Olx olx : userDetails) {
-			if (olx.getUserId() == userId) {
-				userDetails.remove(olx);
-				return "user deleted Successfully" + userId;
-			}
-		}
-		return "Sorry user is not available";
+		
+		olxRepository.deleteById(userId);
+		return "User info deleted with : "+userId;
+		/*
+		 * for (Olx olx : userDetails) { if (olx.getUserId() == userId) {
+		 * userDetails.remove(olx); return "user deleted Successfully" + userId; } }
+		 * return "Sorry user is not available";
+		 */
 
 	}
 

@@ -23,21 +23,22 @@ import com.zensar.olxapplication.service.OlxService;
 public class OlxController {
 	@Autowired
 	private OlxService olxService;
-	
-
 
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
-	public ResponseEntity<Olx> createOlxUser(@RequestBody OlxDto olx, @RequestHeader("auth-token") String token) {
+	public ResponseEntity<OlxDto> createOlxUser(@RequestBody OlxDto olx, @RequestHeader("auth-token") String token) {
+		System.out.println("Hi");
 		OlxDto olxResult = olxService.createOlxUser(olx, token);
 		if (olxResult == null) {
-			return new ResponseEntity<Olx>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<OlxDto>(HttpStatus.BAD_REQUEST);
 		} else {
-			return new ResponseEntity<Olx>(HttpStatus.CREATED);
+			return new ResponseEntity<OlxDto>(olxResult, HttpStatus.CREATED);
 		}
 	}
 
 	@GetMapping("/user")
-	public List<OlxDto> getAllUser(@RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
+	public List<OlxDto> getAllUser(
+			@RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
+
 			@RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize) {
 
 		return olxService.getAllUser(pageNumber, pageSize);
@@ -46,8 +47,8 @@ public class OlxController {
 
 	// @PostMapping
 	@RequestMapping(value = "/user/authenticate", method = RequestMethod.POST)
-	public String signInDetails(@RequestBody(required = false) String userName,
-			@RequestBody(required = false) String password, @RequestHeader("auth-token") String token) {
+	public String signInDetails(@RequestBody String userName, @RequestBody String password,
+			@RequestHeader("auth-token") String token) {
 		return olxService.signInDetails(userName, password, token);
 
 	}

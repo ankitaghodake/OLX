@@ -5,6 +5,6 @@ import java.util.List;
 import com.zensar.olxmasterappplication.dto.OlxMasterDto;
 
 public interface MasterService {
-	List<OlxMasterDto> getAllAdd();
-	List<OlxMasterDto> getStatusList();
+	List<OlxMasterDto> getAllAdd(int pageNumber,int pageSize);
+	List<OlxMasterDto> getStatusList(int pageNumber,int pageSize);
 }

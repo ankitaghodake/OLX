@@ -1,1 +1,0 @@
-insert into Olx values(1,"Ankita","Ghodake","AnkitaGhodake",9046382944,"Ankita@Zensar.com","Ankita@123");

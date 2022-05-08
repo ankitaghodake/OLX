@@ -20,12 +20,14 @@ public class AdvertiseServiceImpl implements AdvertiseService {
 	private ModelMapper modelMapper = new ModelMapper();
 
 	OlxAdverties olxAdverities = new OlxAdverties();
-	static List<OlxAdverties> userAdvertiesDetails = new ArrayList<OlxAdverties>();
-
-	static {
-		userAdvertiesDetails.add(new OlxAdverties(1, "Laptop sale", 54000, "electronics good", "Intel core 3 sony viao",
-				"ankita", 2104, 2104, "Open"));
-	}
+	/*
+	 * static List<OlxAdverties> userAdvertiesDetails = new
+	 * ArrayList<OlxAdverties>();
+	 * 
+	 * static { userAdvertiesDetails.add(new OlxAdverties(1, "Laptop sale", 54000,
+	 * "electronics good", "Intel core 3 sony viao", "ankita", 2104, 2104, "Open"));
+	 * }
+	 */
 
 	@Override
 	public OlxAddDto createOlxUser(OlxAddDto olxRequest, String token) {
@@ -45,7 +47,7 @@ public class AdvertiseServiceImpl implements AdvertiseService {
 		List<OlxAdverties> ListOlx = advertiesRepository.findAll();
 		//List<OlxAdverties> content = pageOlx.getContent();
 		List<OlxAddDto> olxAdvertiseResponses = new ArrayList<>();
-		for (OlxAdverties stock : userAdvertiesDetails) {
+		for (OlxAdverties stock : ListOlx) {
 			OlxAddDto olx1 = modelMapper.map(stock, OlxAddDto.class);
 			olxAdvertiseResponses.add(olx1);
 		}
@@ -80,12 +82,7 @@ public class AdvertiseServiceImpl implements AdvertiseService {
 
 	@Override
 	public String deleteUser(int id) {
-		for (OlxAdverties olx : userAdvertiesDetails) {
-			if (olx.getId() == id) {
-				userAdvertiesDetails.remove(olx);
-				return "Deleted successfully!!";
-			}
-		}
-		return "Deletion failed";
-	}
+		advertiesRepository.deleteById(id);
+		return "Deleted by id"+id;
+}
 }
