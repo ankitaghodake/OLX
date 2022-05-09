@@ -31,6 +31,23 @@ public class OlxServiceImpl implements OlxService {
 	 // "ankita@97", "ankita25897@gmail.com", 9985278789L)); }
 	
 
+	
+	
+	@Override
+	public List<OlxDto> findOlxByName(String name) {
+		List<Olx> findName=olxRepository.findOlxByName(name);
+		List<OlxDto> olxResponses = new ArrayList<>();
+		for(Olx st:findName) {
+			//OlxDto mapToResponse = mapToResponse(st);
+			OlxDto response=modelMapper.map(st, OlxDto.class);
+			olxResponses.add(response);
+		}
+		
+		return olxResponses;
+	}
+	
+	
+	
 	@Override
 	public List<OlxDto> getAllUser( int pageNumber, int pageSize ) {
 		Page<Olx> listOlx = olxRepository.findAll( PageRequest.of(pageNumber, pageSize) );
@@ -140,5 +157,9 @@ public class OlxServiceImpl implements OlxService {
 		return olxResponse;
 
 	}
+
+
+
+	
 
 }

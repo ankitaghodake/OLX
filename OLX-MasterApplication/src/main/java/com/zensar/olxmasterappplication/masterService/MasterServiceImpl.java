@@ -39,6 +39,34 @@ public class MasterServiceImpl implements MasterService {
 	  }
 	 
 
+	  
+	  @Override
+		public List<OlxMasterDto> findOlxByCategory(String categ) {
+		  List<OlxCategories> findcategory=masterCategories.findOlxByCategory(categ);
+		  List<OlxMasterDto> olxResponses = new ArrayList<>();
+		  for(OlxCategories st:findcategory) {
+			  //OlxMasterDto mapToResponse = mapToResponse(st);
+			  OlxMasterDto response=modelMapper.map(st, OlxMasterDto.class);
+		  olxResponses.add(response);
+		  }
+
+		  return olxResponses;
+		}
+	  
+	  @Override
+		public List<OlxMasterDto> findOlxByStatus(String statusList) {
+		  List<OlxStatusList> findStatus=masterStatus.findOlxByStatus(statusList);
+		  List<OlxMasterDto> olxResponses = new ArrayList<>();
+		  for(OlxStatusList st:findStatus) {
+			  //OlxMasterDto mapToResponse = mapToResponse(st);
+			  OlxMasterDto response=modelMapper.map(st, OlxMasterDto.class);
+		  olxResponses.add(response);
+		  }
+
+		  return olxResponses;
+		}
+
+
 	@Override
 	public List<OlxMasterDto> getAllAdd(int pageNumber,int pageSize) {
 		List<OlxCategories> ListOlx = masterCategories.findAll();
@@ -149,5 +177,7 @@ public class MasterServiceImpl implements MasterService {
 
 	}
 
+	
+	
 	
 }

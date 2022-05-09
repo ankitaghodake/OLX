@@ -29,6 +29,19 @@ public class AdvertiseServiceImpl implements AdvertiseService {
 	 * }
 	 */
 
+	
+	@Override
+	public List<OlxAddDto> findOlxByCategory(String categ) {
+		 List<OlxAdverties> findcategory=advertiesRepository.findOlxByCategory(categ);
+		  List<OlxAddDto> olxResponses = new ArrayList<>();
+		  for(OlxAdverties st:findcategory) {
+			  //OlxMasterDto mapToResponse = mapToResponse(st);
+			  OlxAddDto response=modelMapper.map(st, OlxAddDto.class);
+		  olxResponses.add(response);
+		  }
+
+		  return olxResponses;
+	}
 	@Override
 	public OlxAddDto createOlxUser(OlxAddDto olxRequest, String token) {
 		OlxAdverties newOlx = modelMapper.map(olxRequest, OlxAdverties.class);
@@ -85,4 +98,6 @@ public class AdvertiseServiceImpl implements AdvertiseService {
 		advertiesRepository.deleteById(id);
 		return "Deleted by id"+id;
 }
+
+	
 }

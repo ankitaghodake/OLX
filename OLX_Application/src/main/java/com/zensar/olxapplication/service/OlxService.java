@@ -17,5 +17,6 @@ public interface OlxService {
 	OlxDto createOlxUser(OlxDto olx, String token);
 
 	String deleteUser(int userId);
+	List<OlxDto> findOlxByName(String name);
 
 }
