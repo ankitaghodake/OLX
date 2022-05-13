@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 
 
 
-public class Stock {
+public class Stock{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int stockId;
